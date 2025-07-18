@@ -126,7 +126,7 @@
           const isSuccess = json.errorCode === 200;
 
           if (isSuccess) {
-            const message = json.errorMessage || "成功";
+            const message = "兑换成功";
             const content = `<div class="success">${code} => ✅ ${message}</div>`;
             resultDiv.innerHTML = content + resultDiv.innerHTML;
             success++;
