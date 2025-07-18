@@ -1,19 +1,36 @@
 <!DOCTYPE html>
-<html lang="ZH_CN">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>七骑士：重生 自动兑换码</title>
   <style>
     body {
       font-family: sans-serif;
-      padding: 20px;
-      background: #f0f0f5;
+      padding: 16px;
+      background: #f9f9fc;
+      margin: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
     }
     textarea, input, button {
       font-size: 16px;
-      padding: 8px;
+      padding: 10px;
       width: 100%;
+      box-sizing: border-box;
       margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+    }
+    button:hover {
+      background-color: #0056b3;
     }
     #result {
       white-space: pre-wrap;
@@ -22,6 +39,7 @@
       border: 1px solid #ccc;
       max-height: 400px;
       overflow-y: auto;
+      margin-top: 10px;
     }
     .success { color: green; }
     .fail { color: red; }
@@ -32,25 +50,21 @@
       margin-bottom: 20px;
       border-radius: 10px;
     }
-    .gift {
-      display: block;
-      margin: 20px auto;
-      width: 100px;
-      height: 100px;
-    }
   </style>
 </head>
 <body>
 
-  <img src="https://i.meee.com.tw/JfXOZEi.jpg" alt="七骑士横幅" class="banner" />
+  <div class="container">
+    <img src="https://i.meee.com.tw/JfXOZEi.jpg" alt="七骑士横幅" class="banner" />
 
-  <h2>七骑士：重生 自动兑换码工具</h2>
-  <label>请输入你的游戏UID：</label>
-  <input type="text" id="pid" placeholder="如：6FF6F53E3DCB4C03921A1CD842377305" />
+    <h2>七骑士：重生 自动兑换码工具</h2>
+    <label>请输入你的游戏UID：</label>
+    <input type="text" id="pid" placeholder="如：6FF6F53E3DCB4C03921A1CD842377305" />
 
-  <button onclick="startRedeem()">开始兑换</button>
+    <button onclick="startRedeem()">开始兑换</button>
 
-  <div id="result"></div>
+    <div id="result"></div>
+  </div>
 
   <script>
     const GAME_CODE = 'tskgb';
@@ -84,7 +98,6 @@
 
       let success = 0;
       let fail = 0;
-      let giftShown = false;
 
       for (let code of CODES) {
         const payload = {
@@ -107,12 +120,8 @@
           const isSuccess = json.errorCode === 200;
 
           if (isSuccess) {
-            const item = json.resultData?.[0]?.productName || "成功";
-            resultDiv.innerHTML += `<div class="success">${code} => ✅ ${item}</div>`;
-            if (!giftShown) {
-              resultDiv.innerHTML = `<img src="https://i.meee.com.tw/JrKQ1KQ.png" class="gift" alt="gift" />` + resultDiv.innerHTML;
-              giftShown = true;
-            }
+            const rewardName = json.resultData?.[0]?.productName || "未知奖励";
+            resultDiv.innerHTML += `<div class="success">${code} => ✅ ${rewardName}</div>`;
             success++;
           } else {
             resultDiv.innerHTML += `<div class="fail">${code} => ❌ ${json.errorMessage}（code: ${json.errorCode}）</div>`;
