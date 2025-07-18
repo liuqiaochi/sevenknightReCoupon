@@ -120,16 +120,24 @@
           const isSuccess = json.errorCode === 200;
 
           if (isSuccess) {
-            const rewardDetail = JSON.stringify(json.resultData, null, 2);
-            resultDiv.innerHTML += `<div class="success">${code} => ✅ <pre>${rewardDetail}</pre></div>`;
+            const message = json.errorMessage || "成功";
+            const content = `<div class="success">${code} => ✅ ${message}</div>`;
+            resultDiv.innerHTML = content + resultDiv.innerHTML;
             success++;
           } else {
-            resultDiv.innerHTML += `<div class="fail">${code} => ❌ ${json.errorMessage}（code: ${json.errorCode}）</div>`;
+            let errorText = "未知错误";
+            if (json.errorCode === 24003) {
+              errorText = "兑换码超过使用时限";
+            } else if (json.errorCode === 24004) {
+              errorText = "兑换码已被使用";
+            }
+            const content = `<div class="fail">${code} => ❌ ${errorText}（code: ${json.errorCode}）</div>`;
+            resultDiv.innerHTML = content + resultDiv.innerHTML;
             fail++;
           }
 
         } catch (err) {
-          resultDiv.innerHTML += `<div class="fail">${code} => ❌ 请求失败</div>`;
+          resultDiv.innerHTML = `<div class="fail">${code} => ❌ 请求失败</div>` + resultDiv.innerHTML;
           fail++;
         }
 
