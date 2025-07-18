@@ -120,8 +120,8 @@
           const isSuccess = json.errorCode === 200;
 
           if (isSuccess) {
-            const rewardName = json.resultData?.[0]?.productName || "未知奖励";
-            resultDiv.innerHTML += `<div class="success">${code} => ✅ ${rewardName}</div>`;
+            const rewardDetail = JSON.stringify(json.resultData, null, 2);
+            resultDiv.innerHTML += `<div class="success">${code} => ✅ <pre>${rewardDetail}</pre></div>`;
             success++;
           } else {
             resultDiv.innerHTML += `<div class="fail">${code} => ❌ ${json.errorMessage}（code: ${json.errorCode}）</div>`;
