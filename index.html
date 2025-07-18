@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>七骑士：重生 自动兑换码</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    textarea, input, button {
+      font-size: 16px;
+      padding: 8px;
+      width: 100%;
+      margin: 10px 0;
+    }
+    #result {
+      white-space: pre-wrap;
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #ccc;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .success { color: green; }
+    .fail { color: red; }
+  </style>
+</head>
+<body>
+
+  <h2>七骑士：重生 自动兑换码工具</h2>
+  <label>请输入你的游戏UID：</label>
+  <input type="text" id="pid" placeholder="如：6FF6F53E3DCB4C03921A1CD842377305" />
+
+  <button onclick="startRedeem()">开始兑换</button>
+
+  <div id="result"></div>
+
+  <script>
+    const GAME_CODE = 'tskgb';
+    const LANG_CD = 'KR';
+    const BASE_URL = 'https://coupon.netmarble.com/api/coupon/reward';
+    const WAIT_SECONDS = 0.5;
+
+    const CODES = [
+  "BLINGBLING", "MOONLIGHTCOAST", "SHININGPRISM", "SADENDING", "LODING",
+  "JULYSENAMONTH", "HTRIBERANES", "JJOLJACK", "PUKIDANCE", "777SENARE", "SEVENVSDARK",
+  "FORTAGNIA", "RINKARMA", "GUILDWAR", "7SENASENA7", "INTOTHESENA", "LEGENDSRAID",
+  "SURPRISE", "STORYEVENT", "VALKYRIE", "NOHOSCHRONICLE", "ADVENTURER", "FUSEGETSPECIAL",
+  "THEHOLYCROSS", "INFOCODEX", "PDKIMJUNGKI", "SHOWMETHEMONEY", "SENAREGOGO",
+  "HEROSOMMON", "WELCOMESENA", "MOREKEYS", "RELEASEPET", "YUISSONG", "MAILBOX",
+  "SECRETCODE", "SENAEVENTS", "SENARAID", "UPDATES", "INFINITETOWER", "LOVESENA",
+  "7777777", "CMMAY", "SENAHAJASENA", "DARKKNIGHTS", "EVANKARIN", "THEMONTHOFSENA",
+  "WELCOMEBACK", "TREASURE", "YONGSANIM", "BONVOYAGE", "REBIRTHBACK", "LOVELYRUBY",
+  "THANKYOU", "GOODLUCK", "SEVENKNIGHTSFOREVER", "SORRY4WAITING", "SENARESAMEWAY",
+  "SENAREGSIK", "SENAREYOUNGLAEGI", "SENAREMOOVING"
+];
+
+    async function startRedeem() {
+      const pid = document.getElementById("pid").value.trim();
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "";
+
+      if (!pid) {
+        alert("请输入 PID！");
+        return;
+      }
+
+      let success = 0;
+      let fail = 0;
+
+      for (let code of CODES) {
+        const payload = {
+          gameCode: GAME_CODE,
+          couponCode: code,
+          langCd: LANG_CD,
+          pid: pid
+        };
+
+        try {
+          const res = await fetch(BASE_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+          });
+
+          const json = await res.json();
+          const isSuccess = json.errorCode === 200;
+
+          resultDiv.innerHTML += `<div class="${isSuccess ? 'success' : 'fail'}">
+            ${code} => ${isSuccess ? "✅ 成功" : "❌ 失败（code: " + json.errorCode + "）"}
+          </div>`;
+
+          if (isSuccess) success++;
+          else fail++;
+        } catch (err) {
+          resultDiv.innerHTML += `<div class="fail">${code} => ❌ 请求失败</div>`;
+          fail++;
+        }
+
+        await new Promise(r => setTimeout(r, WAIT_SECONDS * 1000));
+      }
+
+      resultDiv.innerHTML += `<hr><strong>兑换完成：成功 ${success} 个，失败 ${fail} 个</strong>`;
+    }
+  </script>
+
+</body>
+</html>
