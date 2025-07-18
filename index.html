@@ -61,7 +61,7 @@
     <label>请输入你的游戏UID：</label>
     <input type="text" id="pid" placeholder="如：6FF6F53E3DCB4C03921A1CD842377305" />
 
-    <button onclick="startRedeem()">开始兑换</button>
+    <button id="redeemBtn" onclick="startRedeem()">开始兑换</button>
 
     <div id="result"></div>
   </div>
@@ -89,10 +89,16 @@
     async function startRedeem() {
       const pid = document.getElementById("pid").value.trim();
       const resultDiv = document.getElementById("result");
+      const redeemBtn = document.getElementById("redeemBtn");
+
+      redeemBtn.disabled = true;
+      redeemBtn.textContent = "兑换中，请稍候...";
       resultDiv.innerHTML = "";
 
       if (!pid) {
         alert("请输入游戏UID！");
+        redeemBtn.disabled = false;
+        redeemBtn.textContent = "开始兑换";
         return;
       }
 
@@ -137,15 +143,20 @@
           }
 
         } catch (err) {
-          resultDiv.innerHTML = `<div class="fail">${code} => ❌ 请求失败</div>` + resultDiv.innerHTML;
+          const content = `<div class="fail">${code} => ❌ 请求失败</div>`;
+          resultDiv.innerHTML = content + resultDiv.innerHTML;
           fail++;
         }
 
         await new Promise(r => setTimeout(r, WAIT_SECONDS * 1000));
       }
 
-      resultDiv.innerHTML += `<hr><strong>兑换完成：成功 ${success} 个，失败 ${fail} 个</strong>`;
+      resultDiv.innerHTML = `<hr><strong>兑换完成：成功 ${success} 个，失败 ${fail} 个</strong>\n` + resultDiv.innerHTML;
+
+      redeemBtn.disabled = false;
+      redeemBtn.textContent = "开始兑换";
     }
+
   </script>
 
 </body>
