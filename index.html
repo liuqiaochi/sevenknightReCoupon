@@ -58,7 +58,21 @@
     <img src="https://i.imgs.ovh/2025/07/18/D3tan.jpeg" alt="七骑士横幅" class="banner" />
 
     <h2>七骑士：重生 自动兑换码工具</h2>
-    <label>请输入你的游戏UID：</label>
+    <label>更新兑换码(共68+6旧码)：<br>
+        "CUTEECHO",
+        "ILOVEPICKUP",
+        "SKYGATE",
+        "NOMARLHERO",
+        "LETSDOSNEA",
+        "RANKUPGOGO",
+        "DAILYMISSIONS",
+        "SENA7SENA",
+        "BESTGUILD",
+        "PEPEPOPO",
+        "PROFILE",
+        "GACHAGETCHA",
+        "SENAARENA"<br></label>
+    <label><br>请输入你的游戏UID：</label>
     <input type="text" id="pid" placeholder="如：6FF6F53E3DCB4C03921A1CD842377305" />
 
     <button id="redeemBtn" onclick="startRedeem()">开始兑换</button>
@@ -72,8 +86,19 @@
     const BASE_URL = 'https://sevenknightrecoupon.liuqiaochi-develope.workers.dev/';
     const WAIT_SECONDS = 0.5;
 
-    const CODES = [
-      "BLINGBLING", "MOONLIGHTCOAST", "SHININGPRISM", "SADENDING", "LODING",
+    const CODES = ["CUTEECHO",
+                   "ILOVEPICKUP",
+                   "SKYGATE",
+                   "NOMARLHERO",
+                   "LETSDOSNEA",
+                   "RANKUPGOGO",
+                   "DAILYMISSIONS",
+                   "SENA7SENA",
+                   "BESTGUILD",
+                   "PEPEPOPO",
+                   "PROFILE",
+                   "GACHAGETCHA",
+                   "SENAARENA","BLINGBLING", "MOONLIGHTCOAST", "SHININGPRISM", "SADENDING", "LODING",
       "JULYSENAMONTH", "HTRIBERANES", "JJOLJACK", "PUKIDANCE", "777SENARE", "SEVENVSDARK",
       "FORTAGNIA", "RINKARMA", "GUILDWAR", "7SENASENA7", "INTOTHESENA", "LEGENDSRAID",
       "SURPRISE", "STORYEVENT", "VALKYRIE", "NOHOSCHRONICLE", "ADVENTURER", "FUSEGETSPECIAL",
@@ -117,7 +142,7 @@
           const res = await fetch(BASE_URL, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             },
             body: JSON.stringify(payload)
           });
