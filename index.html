@@ -58,9 +58,9 @@
     <img src="https://i.imgs.ovh/2025/07/18/D3tan.jpeg" alt="七骑士横幅" class="banner" />
 
     <h2>七骑士：重生 自动兑换码工具（请求失败先开梯子再试）</h2>
-    <label>更新日期：2026.1.27：<br><br></label>
+    <label>更新日期：2026-01-27<br><br></label>
     <label><br>请输入你的游戏UID：</label>
-    <input type="text" id="pid" placeholder="如：D7606AAE6B8D43FE81CDB96DED739A34" />
+    <input type="text" id="pid" placeholder="如：6FF6F53E3DCB4C03921A1CD842377305" />
 
     <button id="redeemBtn" onclick="startRedeem()">开始兑换</button>
 
@@ -69,23 +69,13 @@
 
   <script>
     const GAME_CODE = 'tskgb';
-    const LANG_CD = 'ZH_CN';
+    const LANG_CD = 'KR';
     const BASE_URL = 'https://sevenknightrecoupon.liuqiaochi-develope.workers.dev/';
     const WAIT_SECONDS = 0.5;
 
     const CODES = [
-      "RECONSTRUCTTELUS",
-      "SURPRISEFORYOU",
-      "TIMEFORADVENTURE",
-      "CHLOEMAYALICE",
-      "RUBYFARM",
-      "ONEMORETIME",
-      "KNIGHTSSEVEN",
-      "TRUSTYFRIEND",
-      "PALLANUS",
-      "HAPPYSENATIME﻿",
-      "WELCOMESENA﻿"
-    ];
+                   "WELCOMESENA"
+                 ];
 
 
     async function startRedeem() {
